@@ -1,0 +1,15 @@
+.wrapper {
+  background-color: #009688;
+  border-radius: 20px;
+  padding: 15px;
+  .title {
+    color: #9e9e9e;
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    .remove-btn {
+      background-color: #f44336;
+    }
+  }
+}

@@ -15,7 +15,7 @@ function validateEmail(value) {
   return error;
 }
 
-function validateUsername(value) {
+function validateName(value) {
   let error;
   if (!value) error = "Required";
   return error;
@@ -41,7 +41,7 @@ const Registration = () => {
   return (
     <Formik
       initialValues={{
-        username: "",
+        name: "",
         email: "",
         password: "",
       }}
@@ -55,13 +55,9 @@ const Registration = () => {
             {errors.email && touched.email && errors.email}
           </div>
 
-          <Field
-            name="username"
-            validate={validateUsername}
-            placeholder="Name"
-          />
+          <Field name="name" validate={validateName} placeholder="Name" />
           <div className="error">
-            {errors.username && touched.username && errors.username}
+            {errors.name && touched.name && errors.name}
           </div>
 
           <Field

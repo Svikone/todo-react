@@ -2,10 +2,11 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import axios from "axios";
 import environment from "../../environment/environment";
-import { createStore } from "redux";
-import { connect } from "react-redux";
+import { setLoginData } from "../../store/auth/login/actions";
+import { useSelector } from "react-redux";
+import { connect, Provider, useDispatch } from "react-redux";
 
-function validateUsername(value) {
+function validateName(value) {
   let error;
   if (!value) error = "Required";
   return error;
@@ -16,28 +17,29 @@ function validatePassword(value) {
   if (!value) error = "Required";
   return error;
 }
-const initialState = {
-  token: "",
-};
-const rootReducer = (state = initialState, action) => {};
 
-const store = createStore(rootReducer);
-console.log(store.getState());
 const Login = () => {
+  const dispatch = useDispatch();
+
   const onSubmit = (values, { resetForm }) => {
-    axios
-      .post(`${environment.apiUrl}${environment.prefix}user/login`, values)
-      .then((res) => {
-        resetForm({});
-        //   window.location.assign("login");
-      })
-      .catch((error) => console.log(error));
+    dispatch(setLoginData(values));
+    resetForm({});
+    // axios
+    //   .post(`${environment.apiUrl}${environment.prefix}user/login`, values)
+    //   .then((res) => {
+    //     const token = res.data.token;
+    //     resetForm({});
+    //     localStorage.setItem("token", token);
+    //     dispatch(setToken());
+    //     //   window.location.assign("login");
+    //   })
+    //   .catch((error) => console.log(error));
   };
 
   return (
     <Formik
       initialValues={{
-        username: "",
+        name: "",
         password: "",
       }}
       onSubmit={onSubmit}
@@ -46,17 +48,14 @@ const Login = () => {
         <Form>
           <div className="">SIGN IN</div>
 
-          <Field
-            name="username"
-            validate={validateUsername}
-            placeholder="Name"
-          />
+          <Field name="name" validate={validateName} placeholder="Name" />
           <div className="error">
-            {errors.username && touched.username && errors.username}
+            {errors.name && touched.name && errors.name}
           </div>
 
           <Field
             name="password"
+            type="password"
             validate={validatePassword}
             placeholder="Password"
           />

@@ -1,0 +1,43 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+form {
+  max-width: 400px;
+  padding: 60px 50px;
+  background: #607d8b;
+  margin: auto;
+  border-radius: 40px;
+  input {
+    width: 100%;
+    padding: 0 15px;
+    margin: 10px 0 15px;
+    border-width: 0;
+    line-height: 40px;
+    border-radius: 20px;
+    color: black;
+    background: rgba(255, 255, 255, 0.2);
+    font-family: "Roboto", sans-serif;
+    outline: none;
+  }
+  .error {
+    color: #ff5722;
+  }
+}
+
+.btn {
+  width: fit-content;
+  background-color: #8bc34a;
+  padding: 10px 26px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
