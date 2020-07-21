@@ -6,12 +6,17 @@ const cardsSchema = new Schema({
     required: true,
   },
 
-  data: {
+  date: {
     type: String,
     required: true,
   },
 
   name: {
+    type: String,
+    required: true,
+  },
+
+  title: {
     type: String,
     required: true,
   },

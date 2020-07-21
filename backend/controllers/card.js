@@ -1,10 +1,10 @@
 const Card = require('../models/card');
 
 exports.createCard = async (req, res) => {
-    const { content, data } = req.body
+    const { content, date, title} = req.body
     try {
         const card = new Card({
-            content, data, name: req.user.name,
+            content, title, date, name: req.user.name,
         });
         await card.save();
         res.send({ message: 'Card is successful' }).status(200);

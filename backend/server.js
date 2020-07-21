@@ -4,17 +4,17 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require("body-parser");
 app.use(cors());
-const http = require('http');
+// const http = require('http');
 require('dotenv').config()
 
-// app.use(cors({ origin: ['http://localhost:4200'] }));
+// app.use(cors({ origin: ['http://localhost:3000'] }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use (bodyParser.json ({
 	extended: true,
 	limit: "50mb"
 }));
 
-const server = http.createServer(app);
+// const server = http.createServer(app);
 app.use('/api/user', require('./routes/user'));
 app.use('/api/card', require('./routes/card'));
 
@@ -30,7 +30,7 @@ async function start() {
       process.exit(1);
     }
 
-    server.listen(port, () => {
+    app.listen(port, () => {
       console.log(`server started ${port}`);
     });
   } catch (e) {
