@@ -11,6 +11,8 @@ import createSagaMiddleware from 'redux-saga';
 import { watchLoadData } from './sagas/sagas';
 import logger from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const sagaMiidleware = createSagaMiddleware()
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(logger, sagaMiidleware)));

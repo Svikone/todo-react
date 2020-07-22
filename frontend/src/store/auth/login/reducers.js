@@ -1,27 +1,27 @@
-import { TOKEN, LOGIN_DATA, SUCCESFULL_LOGIN } from "./actions";
+import { LOGIN_SUCCESS, LOGIN, LOGIN_ERROR } from "./actions";
 
 const defaultState = {
     token: "", 
     data: {},
-    stateLogin: false
+    errorMessage: ""
 }
 
 export const loginReducer = (state = defaultState, action) => {
     switch(action.type) {
-        case TOKEN:
-        return {
-            ...state,
-            token: action.payload
-            }
-        case LOGIN_DATA:
+        case LOGIN:
         return {
             ...state,
             data: action.payload
             }
-        case SUCCESFULL_LOGIN:
+        case LOGIN_SUCCESS:
         return {
             ...state,
-            stateLogin: action.payload
+            token: action.payload
+            }
+        case LOGIN_ERROR:
+        return {
+            ...state,
+            errorMessage: action.payload
         }
     }
   return state;

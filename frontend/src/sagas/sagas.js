@@ -1,24 +1,20 @@
-import { LOGIN_DATA, setToken,succesfullLogin } from '../store/auth/login/actions';
+import { LOGIN, LOGIN_ERROR, loginSucces, loginError } from '../store/auth/login/actions';
 import { takeEvery, put, call } from 'redux-saga/effects';
-import environment from "../environment/environment";
+import httpServices from '../services/http.service';
 
-function fetchData(user) {
-    return fetch(`${environment.apiUrl}${environment.prefix}user/login`, {
-        headers: { 'Content-Type': 'application/json' },
-        method: 'POST',
-        body: JSON.stringify(user)
-    })
-    .then(response => response.json())
-}
 
 function* loginWorker(user) {
-    const data = yield call(fetchData, user.payload)
-    yield put(setToken(data)) 
-    
-    
+    try {
+        const token =  yield call(httpServices.post, "user/login", user)
+        yield put(loginSucces(token))
+    } 
+    catch (error) {
+        yield put(loginError(error.response.data.message))
+    }
 }
 
 export function* watchLoadData() {
-    yield takeEvery(LOGIN_DATA, loginWorker)//
+    yield takeEvery(LOGIN, loginWorker)
 }
+//take every слушает LOGIN событие и тогда когда он гдето срабатываетто и
 

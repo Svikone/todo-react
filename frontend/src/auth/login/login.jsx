@@ -1,10 +1,12 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
-import axios from "axios";
-import environment from "../../environment/environment";
 import { setLoginData } from "../../store/auth/login/actions";
-import { useSelector } from "react-redux";
-import { connect, Provider, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import Error from "../../shared/error";
+import { Button } from "react-bootstrap";
+// import { Form } from "react-bootstrap";
+import FormGroup from "react-bootstrap/FormGroup";
+import FormControl from "react-bootstrap/FormControl";
 
 function validateName(value) {
   let error;
@@ -24,49 +26,43 @@ const Login = () => {
   const onSubmit = (values, { resetForm }) => {
     dispatch(setLoginData(values));
     resetForm({});
-    // axios
-    //   .post(`${environment.apiUrl}${environment.prefix}user/login`, values)
-    //   .then((res) => {
-    //     const token = res.data.token;
-    //     resetForm({});
-    //     localStorage.setItem("token", token);
-    //     dispatch(setToken());
-    //     //   window.location.assign("login");
-    //   })
-    //   .catch((error) => console.log(error));
   };
 
   return (
-    <Formik
-      initialValues={{
-        name: "",
-        password: "",
-      }}
-      onSubmit={onSubmit}
-    >
-      {({ errors, touched }) => (
-        <Form>
-          <div className="">SIGN IN</div>
+    <div className="">
+      <Formik
+        initialValues={{
+          name: "",
+          password: "",
+        }}
+        onSubmit={onSubmit}
+      >
+        {({ errors, touched }) => (
+          <Form>
+            <div className="">SIGN IN</div>
 
-          <Field name="name" validate={validateName} placeholder="Name" />
-          <div className="error">
-            {errors.name && touched.name && errors.name}
-          </div>
+            <Field name="name" validate={validateName} placeholder="Name" />
+            <div className="error">
+              {errors.name && touched.name && errors.name}
+            </div>
 
-          <Field
-            name="password"
-            type="password"
-            validate={validatePassword}
-            placeholder="Password"
-          />
-          <div className="error">
-            {errors.password && touched.password && errors.password}
-          </div>
+            <Field
+              name="password"
+              type="password"
+              validate={validatePassword}
+              placeholder="Password"
+            />
+            <div className="error">
+              {errors.password && touched.password && errors.password}
+            </div>
 
-          <button type="submit">Submit</button>
-        </Form>
-      )}
-    </Formik>
+            <Button type="submit">Submit</Button>
+          </Form>
+        )}
+      </Formik>
+
+      <Error />
+    </div>
   );
 };
 
