@@ -1,5 +1,5 @@
 import React from "react";
-import { popUp, createcard } from "../../store/main/actions";
+import { popUp, createcard } from "../../../store/main/actions";
 import { connect } from "react-redux";
 import { Button, Form } from "react-bootstrap";
 import "./createNote.scss";
