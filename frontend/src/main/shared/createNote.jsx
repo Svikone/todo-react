@@ -16,7 +16,7 @@ const createNote = (props) => {
       <Formik
         validate={(value) => {
           let errors = {};
-          if (!value.title || !value.content) {
+          if (!value.title) {
             errors.title = "Fill in the title";
           }
           if (!value.content) {
@@ -28,7 +28,8 @@ const createNote = (props) => {
           title: "",
           content: "",
         }}
-        onSubmit={handleSubmit}>
+        onSubmit={handleSubmit}
+      >
         {({ errors, handleSubmit, handleChange, touched }) => (
           <Form onSubmit={handleSubmit}>
             <div className="close" onClick={props.visible}>
