@@ -16,10 +16,11 @@ export const setLoginData = (data) => {
     }
 }
 
-export const loginError = (error) => {
+export const loginError = (error, visible) => {
     return {
         type: LOGIN_ERROR,
-        payload: error
+        payload: error,
+        visible
     }
 }
 

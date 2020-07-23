@@ -1,16 +1,15 @@
 import React from "react";
 import { Formik } from "formik";
 import { setLoginData } from "../../store/auth/login/actions";
-import { useDispatch } from "react-redux";
 import Error from "../../shared/error";
 import { Button } from "react-bootstrap";
 import { Form } from "react-bootstrap";
+import { connect } from "react-redux";
 
-const Login = () => {
-  const dispatch = useDispatch();
-
+const Login = (props) => {
+  console.log(props.error);
   const onSubmit = (values, { resetForm }) => {
-    dispatch(setLoginData(values));
+    props.setLoginData(values);
     resetForm({});
   };
 
@@ -71,9 +70,27 @@ const Login = () => {
         )}
       </Formik>
 
-      <Error />
+      {props.error.visible ? (
+        <Error
+          error={props.error.errorMessage}
+          component={props.error.component}
+          visible={props.error.visible}
+        />
+      ) : null}
     </div>
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    error: state.login,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setLoginData: (values) => dispatch(setLoginData(values)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

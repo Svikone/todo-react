@@ -10,7 +10,7 @@ function* loginWorker(user) {
         yield put(loginSucces(token.data.token))
     } 
     catch (error) {
-        yield put(loginError(error.response.data.message))
+        yield put(loginError(error.response.data.message,true))
     }
 }
 

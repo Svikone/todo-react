@@ -1,15 +1,13 @@
 import React from "react";
 import { Formik } from "formik";
 import httpServices from "../../services/http.service";
-import { connect, Provider, useDispatch } from "react-redux";
-import { loginError } from "../../store/auth/login/actions";
+import { connect } from "react-redux";
+import { registrationError } from "../../store/auth/registration/actions";
 import Error from "../../shared/error";
 import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 
-const Registration = () => {
-  const dispatch = useDispatch();
-
+const Registration = (props) => {
   const onSubmit = (values, { resetForm }) => {
     httpServices
       .post("user/register", values)
@@ -19,7 +17,7 @@ const Registration = () => {
       })
       .catch((error) => {
         const errorMessagge = error.response.data.message;
-        dispatch(loginError(errorMessagge));
+        props.registrationError(errorMessagge, true);
       });
   };
 
@@ -103,9 +101,29 @@ const Registration = () => {
           </Form>
         )}
       </Formik>
-      <Error />
+
+      {props.error.visible ? (
+        <Error
+          error={props.error.errorMessage}
+          component={props.error.component}
+          visible={props.error.visible}
+        />
+      ) : null}
     </div>
   );
 };
 
-export default Registration;
+const mapStateToProps = (state) => {
+  return {
+    error: state.registration,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    registrationError: (errorMessagge, visible) =>
+      dispatch(registrationError(errorMessagge, visible)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Registration);

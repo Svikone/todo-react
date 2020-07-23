@@ -3,7 +3,9 @@ import { LOGIN_SUCCESS, LOGIN, LOGIN_ERROR } from "./actions";
 const defaultState = {
     token: "", 
     data: {},
-    errorMessage: ""
+    errorMessage: "",
+    visible: false,
+    component: LOGIN
 }
 
 export const loginReducer = (state = defaultState, action) => {
@@ -21,7 +23,9 @@ export const loginReducer = (state = defaultState, action) => {
         case LOGIN_ERROR:
         return {
             ...state,
-            errorMessage: action.payload
+            errorMessage: action.payload,
+            visible: action.visible
+
         }
     }
   return state;
