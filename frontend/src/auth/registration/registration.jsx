@@ -1,31 +1,11 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik } from "formik";
 import httpServices from "../../services/http.service";
 import { connect, Provider, useDispatch } from "react-redux";
 import { loginError } from "../../store/auth/login/actions";
 import Error from "../../shared/error";
-
-function validateEmail(value) {
-  let error;
-  if (!value) {
-    error = "Required";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
-    error = "Invalid email address";
-  }
-  return error;
-}
-
-function validateName(value) {
-  let error;
-  if (!value) error = "Required";
-  return error;
-}
-
-function validatePassword(value) {
-  let error;
-  if (!value) error = "Required";
-  return error;
-}
+import { Form } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 const Registration = () => {
   const dispatch = useDispatch();
@@ -51,31 +31,75 @@ const Registration = () => {
           email: "",
           password: "",
         }}
+        validate={(value) => {
+          let errors = {};
+          if (!value.name) {
+            errors.name = "Fill in the name";
+          }
+          if (!value.password) {
+            errors.password = "Fill in your password";
+          }
+          if (!value.email) {
+            errors.email = "Fill in your email";
+          } else if (
+            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value.email)
+          ) {
+            errors.email = "Invalid email address";
+          }
+          return errors;
+        }}
         onSubmit={onSubmit}
       >
-        {({ errors, touched }) => (
-          <Form>
-            <div className="">SIGN UP</div>
-            <Field name="email" validate={validateEmail} placeholder="Email" />
-            <div className="error">
-              {errors.email && touched.email && errors.email}
-            </div>
+        {({ errors, handleSubmit, handleChange, touched, values }) => (
+          <Form onSubmit={handleSubmit}>
+            <h1>SIGN UP</h1>
 
-            <Field name="name" validate={validateName} placeholder="Name" />
-            <div className="error">
-              {errors.name && touched.name && errors.name}
-            </div>
+            <Form.Group controlId="formEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                value={values.email}
+                name="email"
+                type="email"
+                placeholder="Email..."
+                onChange={handleChange}
+              />
+            </Form.Group>
 
-            <Field
-              name="password"
-              validate={validatePassword}
-              placeholder="Password"
-            />
-            <div className="error">
-              {errors.password && touched.password && errors.password}
-            </div>
+            {errors.email && touched.email ? (
+              <div className="error">{errors.email}</div>
+            ) : null}
 
-            <button type="submit">Submit</button>
+            <Form.Group controlId="formName">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                value={values.name}
+                name="name"
+                type="text"
+                placeholder="Name..."
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            {errors.name && touched.name ? (
+              <div className="error">{errors.name}</div>
+            ) : null}
+
+            <Form.Group controlId="formPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                value={values.password}
+                name="password"
+                type="password"
+                placeholder="Password..."
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            {errors.password && touched.password ? (
+              <div className="error">{errors.password}</div>
+            ) : null}
+
+            <Button type="submit">Submit</Button>
           </Form>
         )}
       </Formik>

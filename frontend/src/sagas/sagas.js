@@ -5,8 +5,9 @@ import httpServices from '../services/http.service';
 
 function* loginWorker(user) {
     try {
-        const token =  yield call(httpServices.post, "user/login", user)
-        yield put(loginSucces(token))
+        const token = yield call(httpServices.post, "user/login", user.payload)
+        localStorage.setItem('token', token.data.token);
+        yield put(loginSucces(token.data.token))
     } 
     catch (error) {
         yield put(loginError(error.response.data.message))
