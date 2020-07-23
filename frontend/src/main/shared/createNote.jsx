@@ -1,21 +1,14 @@
 import React from "react";
-import { popUp } from "../../store/main/actions";
+import { popUp, createcard } from "../../store/main/actions";
 import { connect } from "react-redux";
 import { Button, Form } from "react-bootstrap";
 import "./createNote.scss";
-import { Formik, Field } from "formik";
-import httpServices from "../../services/http.service";
+import { Formik } from "formik";
 
 const createNote = (props) => {
   const handleSubmit = (value) => {
-    const date = new Date().toLocaleDateString();
-    value.date = date;
-    httpServices
-      .post("card/create", value)
-      .then((response) => {
-        props.visible();
-      })
-      .catch((error) => {});
+    value.date = new Date().toLocaleDateString();
+    props.card(value);
   };
 
   return (
@@ -23,18 +16,25 @@ const createNote = (props) => {
       <Formik
         validate={(value) => {
           let errors = {};
-          if (!value.title || !value.content)
-            errors.name = "Fill in all the fields";
-
+          if (!value.title || !value.content) {
+            errors.title = "Fill in the title";
+          }
+          if (!value.content) {
+            errors.content = "Fill in the main text";
+          }
           return errors;
         }}
         initialValues={{
           title: "",
           content: "",
         }}
-        onSubmit={handleSubmit}
-        render={({ errors, handleSubmit, handleChange }) => (
+        onSubmit={handleSubmit}>
+        {({ errors, handleSubmit, handleChange, touched }) => (
           <Form onSubmit={handleSubmit}>
+            <div className="close" onClick={props.visible}>
+              X
+            </div>
+            <h1>Создать заметку</h1>
             <Form.Group controlId="formBasicTitle">
               <Form.Label>Заголовок</Form.Label>
               <Form.Control
@@ -44,6 +44,10 @@ const createNote = (props) => {
                 onChange={handleChange}
               />
             </Form.Group>
+            {errors.title && touched.title ? (
+              <div className="error">{errors.title}</div>
+            ) : null}
+
             <Form.Group controlId="formBasicContent">
               <Form.Label>Основной текст</Form.Label>
               <Form.Control
@@ -53,13 +57,16 @@ const createNote = (props) => {
                 onChange={handleChange}
               />
             </Form.Group>
+            {errors.content && touched.content ? (
+              <div className="error">{errors.content}</div>
+            ) : null}
+
             <Button variant="primary" type="submit">
               Submit
             </Button>
-            {errors.name ? <div className="error">{errors.name}</div> : null}
           </Form>
         )}
-      ></Formik>
+      </Formik>
     </div>
   );
 };
@@ -70,6 +77,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    card: (card) => dispatch(createcard(card)),
     visible: () => dispatch(popUp(false)),
   };
 };
