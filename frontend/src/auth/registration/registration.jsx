@@ -8,17 +8,15 @@ import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 
 const Registration = (props) => {
-  const onSubmit = (values, { resetForm }) => {
-    httpServices
-      .post("user/register", values)
-      .then((response) => {
-        resetForm({});
-        window.location.assign("login");
-      })
-      .catch((error) => {
-        const errorMessagge = error.response.data.message;
-        props.registrationError(errorMessagge, true);
-      });
+  const onSubmit = async (values, { resetForm }) => {
+    try {
+      await httpServices.post("user/register", values);
+      resetForm({});
+      window.location.assign("login");
+    } catch (error) {
+      const errorMessagge = error.response.data.message;
+      props.registrationError(errorMessagge, true);
+    }
   };
 
   return (
