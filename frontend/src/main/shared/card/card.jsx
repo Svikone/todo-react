@@ -1,19 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import { allCardsUser } from "../../../store/main/actions";
+import { allCardsUser, removeCard } from "../../../store/main/actions";
 import httpServices from "../../../services/http.service";
 import { Button } from "react-bootstrap";
 import "./card.scss";
 
 const Card = (props) => {
-  async function removeCard(id) {
-    try {
-      const response = await httpServices.delete(`card/by/${id}`);
-      props.allCardsUser();
-    } catch (e) {}
+  function removeCard(id) {
+    props.removeCard(id);
   }
 
-  console.log(props.item);
   return (
     <div className="">
       <div className="wrapper">
@@ -34,13 +30,10 @@ const Card = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {};
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
     allCardsUser: () => dispatch(allCardsUser()),
+    removeCard: (id) => dispatch(removeCard(id)),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Card);
+export default connect(null, mapDispatchToProps)(Card);
