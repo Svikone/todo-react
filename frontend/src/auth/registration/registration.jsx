@@ -31,6 +31,8 @@ const Registration = (props) => {
           let errors = {};
           if (!value.name) {
             errors.name = "Fill in the name";
+          } else if (!/^[a-zA-Z]*$/i.test(value.name)) {
+            errors.name = "The name contains incorrect characters";
           }
           if (!value.password) {
             errors.password = "Fill in your password";
