@@ -6,13 +6,15 @@ import { registrationError } from "../../store/auth/registration/actions";
 import Error from "../../shared/error";
 import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 
 const Registration = (props) => {
+  const history = useHistory();
   const onSubmit = async (values, { resetForm }) => {
     try {
       await httpServices.post("user/register", values);
       resetForm({});
-      window.location.assign("login");
+      history.push("/auth/login");
     } catch (error) {
       const errorMessagge = error.response.data.message;
       props.registrationError(errorMessagge, true);

@@ -4,10 +4,16 @@ import { popUp, allCardsUser } from "../store/main/actions";
 import CreateNote from "./shared/createNote/createNote";
 import { Button } from "react-bootstrap";
 import Card from "./shared/card/card";
+import history from "../history";
 
 class Main extends React.Component {
   componentDidMount() {
-    this.props.allCardsUser();
+    const token = localStorage.getItem("token");
+    if (!token) {
+      history.push("/auth/login");
+    } else if (token) {
+      this.props.allCardsUser();
+    }
   }
 
   render() {

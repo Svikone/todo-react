@@ -2,12 +2,14 @@ import { LOGIN, LOGIN_ERROR, loginSucces, loginError } from '../store/auth/login
 import { ALL_CARDS_USER, CREATE_CARD, REMOVE_CARD, popUp, allCardsUserSucces, allCardsUser, removeCardError, removeCardSucces} from '../store/main/actions';
 import { takeEvery, put, call } from 'redux-saga/effects';
 import httpServices from '../services/http.service';
+import history from "../history";
 
 function* loginWorker(user) {
     try {
         const token = yield call(httpServices.post, "user/login", user.payload)
         localStorage.setItem('token', token.data.token);
         yield put(loginSucces(token.data.token))
+        history.push("/main")
     } 
     catch (error) {
         yield put(loginError(error.response.data.message,true))

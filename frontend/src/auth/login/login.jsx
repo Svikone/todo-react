@@ -7,7 +7,6 @@ import { Form } from "react-bootstrap";
 import { connect } from "react-redux";
 
 const Login = (props) => {
-  console.log(props.error);
   const onSubmit = (values, { resetForm }) => {
     props.setLoginData(values);
     resetForm({});
