@@ -33,7 +33,7 @@ exports.login = async (req, res) => {
       return res.status(500).json({message: 'Wrong password'})
     } 
     await jwt.sign({ name }, process.env.SECRETKEY, (err, token) => {
-      res.json({ token });
+      res.json({ token, userId: user._id });
     });
   } catch (e) {
     res.send(e);

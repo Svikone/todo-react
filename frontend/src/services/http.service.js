@@ -12,7 +12,7 @@ const apiUrl = `${environment.apiUrl}${environment.prefix}`;
 
 const httpServices = {
   post: async (url, body) => axios.post(`${apiUrl}${url}`, body, httpOptions),
-  get: async (url) => { axios.get(`${apiUrl}${url}`, httpOptions) },
+  get: async (url) =>  axios.get(`${apiUrl}${url}`, httpOptions) ,
   delete: async (url) => axios.delete(`${apiUrl}${url}`, httpOptions )
 }
 

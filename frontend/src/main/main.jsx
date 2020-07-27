@@ -11,7 +11,7 @@ class Main extends React.Component {
     const token = localStorage.getItem("token");
     if (!token) {
       history.push("/auth/login");
-    } else if (token) {
+    } else {
       this.props.allCardsUser();
     }
   }

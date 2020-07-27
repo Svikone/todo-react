@@ -7,6 +7,7 @@ import { Formik } from "formik";
 
 const createNote = (props) => {
   const handleSubmit = (value) => {
+    value.userId = localStorage.getItem("userId");
     value.date = new Date().toLocaleDateString();
     props.card(value);
   };
@@ -36,7 +37,7 @@ const createNote = (props) => {
               X
             </div>
             <h1>Создать заметку</h1>
-            <Form.Group controlId="formBasicTitle">
+            <Form.Group controlId="formTitle">
               <Form.Label>Заголовок</Form.Label>
               <Form.Control
                 name="title"
@@ -49,7 +50,7 @@ const createNote = (props) => {
               <div className="error">{errors.title}</div>
             ) : null}
 
-            <Form.Group controlId="formBasicContent">
+            <Form.Group controlId="formContent">
               <Form.Label>Основной текст</Form.Label>
               <Form.Control
                 name="content"
@@ -72,10 +73,6 @@ const createNote = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {};
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
     card: (card) => dispatch(createcard(card)),
@@ -83,4 +80,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(createNote);
+export default connect(null, mapDispatchToProps)(createNote);

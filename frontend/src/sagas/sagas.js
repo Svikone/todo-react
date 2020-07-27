@@ -6,9 +6,10 @@ import history from "../history";
 
 function* loginWorker(user) {
     try {
-        const token = yield call(httpServices.post, "user/login", user.payload)
-        localStorage.setItem('token', token.data.token);
-        yield put(loginSucces(token.data.token))
+        const res = yield call(httpServices.post, "user/login", user.payload)
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('userId', res.data.userId);
+        yield put(loginSucces(res.data.token))
         history.push("/main")
     } 
     catch (error) {
@@ -28,7 +29,8 @@ function* createCardWorker(card) {
 
 function* allCardsWorker() {
     try {
-        const cards = yield call(httpServices.get, "card/by/name")
+        const userId = localStorage.getItem("userId");
+        const cards = yield call(httpServices.get, `card/by/${userId}`)
         yield put(allCardsUserSucces(cards.data))
 
     } 
@@ -55,4 +57,3 @@ export function* watchLoadData() {
     yield takeEvery(REMOVE_CARD, removeCardWorker)
 }
 //take every слушает LOGIN событие и тогда когда он гдето срабатываетто и
-

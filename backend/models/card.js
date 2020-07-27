@@ -20,6 +20,11 @@ const cardsSchema = new Schema({
     type: String,
     required: true,
   },
+
+  userId: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = model('cards', cardsSchema);
