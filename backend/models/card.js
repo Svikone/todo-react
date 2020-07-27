@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-
+const ObjectId = Schema.Types.ObjectId
 const cardsSchema = new Schema({
   content: {
     type: String,
@@ -11,18 +11,13 @@ const cardsSchema = new Schema({
     required: true,
   },
 
-  name: {
-    type: String,
-    required: true,
-  },
-
   title: {
     type: String,
     required: true,
   },
 
   userId: {
-    type: String,
+    type: ObjectId,
     required: true,
   },
 });

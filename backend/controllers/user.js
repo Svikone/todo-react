@@ -23,7 +23,6 @@ exports.signup = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { name, password } = req.body;
-    console.log(name,password)
     const user = await User.findOne({ name });
     if (!user) {
       return res.status(500).json( {message: 'This user does not exist'})
@@ -32,8 +31,8 @@ exports.login = async (req, res) => {
     if (!passwordComparison) {
       return res.status(500).json({message: 'Wrong password'})
     } 
-    await jwt.sign({ name }, process.env.SECRETKEY, (err, token) => {
-      res.json({ token, userId: user._id });
+    await jwt.sign({ userId: user._id }, process.env.SECRETKEY, (err, token) => {
+      res.json({ token});
     });
   } catch (e) {
     res.send(e);

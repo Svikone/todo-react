@@ -7,7 +7,6 @@ import { Formik } from "formik";
 
 const createNote = (props) => {
   const handleSubmit = (value) => {
-    value.userId = localStorage.getItem("userId");
     value.date = new Date().toLocaleDateString();
     props.card(value);
   };

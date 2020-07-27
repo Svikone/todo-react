@@ -6,10 +6,9 @@ import history from "../history";
 
 function* loginWorker(user) {
     try {
-        const res = yield call(httpServices.post, "user/login", user.payload)
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('userId', res.data.userId);
-        yield put(loginSucces(res.data.token))
+        const token = yield call(httpServices.post, "user/login", user.payload)
+        localStorage.setItem('token', token.data.token);
+        yield put(loginSucces(token.data.token))
         history.push("/main")
     } 
     catch (error) {
@@ -28,11 +27,10 @@ function* createCardWorker(card) {
 }
 
 function* allCardsWorker() {
+    
     try {
-        const userId = localStorage.getItem("userId");
-        const cards = yield call(httpServices.get, `card/by/${userId}`)
+        const cards = yield call(httpServices.get, "card/by/user")
         yield put(allCardsUserSucces(cards.data))
-
     } 
     catch (error) {
         console.log(error)
